@@ -1,22 +1,21 @@
-const links = document.querySelectorAll('.has-tooltip');
-const hint = document.querySelector('.tooltip');
-
-for (let link of links) {
-  link.addEventListener('click', showHint);
-}
-
-hint.addEventListener('click', () => hint.classList.remove('tooltip_active'));
-
-function showHint(event) {
+const tooltip = Array.from(document.getElementsByClassName("has-tooltip"));
+tooltip.forEach(item => item.addEventListener("click", function (event) {
   event.preventDefault();
-  const tooltip = document.querySelector('.tooltip_active');
 
-  if (tooltip) {
-    tooltip.classList.remove('tooltip_active');
+  const tooltipContainer = document.querySelector(".tooltip");
+  if (tooltipContainer) {
+    let target = event.target;
+    if (tooltipContainer === target.nextElementSibling) {
+      tooltipContainer.remove();
+      return;
+    } else {
+      tooltipContainer.remove();
+    }
   }
 
-  hint.classList.add('tooltip_active');
-  hint.innerText = event.target.title;
-  hint.style.top = event.target.getBoundingClientRect().top + 20 + 'px';
-  hint.style.left = event.target.getBoundingClientRect().left + 'px';
-}
+  const tooltipTitle = this.title;
+  const tooltipPosition = this.getBoundingClientRect();
+  const tooltipLeft = tooltipPosition.left;
+  const tooltipTop = tooltipPosition.top + tooltipPosition.height;
+  this.insertAdjacentHTML("afterEnd", `<div class="tooltip tooltip_active" style="left: ${tooltipLeft}px; top: ${tooltipTop}px">${tooltipTitle}</div>`);
+}));

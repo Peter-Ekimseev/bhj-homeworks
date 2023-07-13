@@ -6,9 +6,7 @@ for (let item of valueButtons) {
   item.addEventListener('click', changeValue);
 }
 
-for (let item of addButtons) {
-  item.addEventListener('click', addToCart);
-}
+addButtons.forEach((element) => element.addEventListener('click', addToCart));
 
 function changeValue(event) {
   let value = event.target.parentNode.querySelector('.product__quantity-value');
